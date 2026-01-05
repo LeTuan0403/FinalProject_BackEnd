@@ -5,6 +5,8 @@ const connectDB = require('./config/db');
 
 dotenv.config();
 connectDB();
+// Start Cron Job
+require('./utils/cronJob')();
 
 const app = express();
 
@@ -19,6 +21,7 @@ app.use('/api/dondattours', require('./routes/bookingRoutes')); // Reverted from
 app.use('/api/diadiems', require('./routes/locationRoutes')); // Reverted from /locations
 app.use('/api/danhgia', require('./routes/reviewRoutes')); // Reverted from /reviews
 app.use('/api/LienHe', require('./routes/contactRoutes')); // Reverted from /contacts
+app.use('/api/payment', require('./routes/paymentRoutes'));
 
 // Error Middleware
 app.use(require('./middleware/errorMiddleware'));

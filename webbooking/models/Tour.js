@@ -11,6 +11,8 @@ const tourSchema = new mongoose.Schema({
   anTrua: String,
   anToi: String,
   tongGiaDuKien: Number,
+  soLuongCho: { type: Number, default: 0 },
+  ngayKhoiHanh: { type: [Date], default: [] },
   ngayTao: { type: Date, default: Date.now },
   phuongTien: String,
   daDuyet: { type: Number, default: 0 }, // 0: Pending, 1: Approved? Screenshot shows 1

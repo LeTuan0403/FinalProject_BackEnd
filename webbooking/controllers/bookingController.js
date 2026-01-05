@@ -12,23 +12,34 @@ exports.createBooking = async (req, res) => {
             return res.status(404).json({ msg: 'Tour not found' });
         }
 
+        // Check seat availability
+        const totalGuests = Number(soLuongNguoiLon) + Number(soLuongTreEm);
+        if (tour.soLuongCho < totalGuests) {
+            return res.status(400).json({ msg: 'Không còn đủ chỗ trống cho số lượng khách này.' });
+        }
+
         const newBooking = new Booking({
             donDatId: await getNextSequence('bookingId'),
             userId: req.user.id,
             tourId: tour._id,
             ngayKhoiHanh,
-            soLuongNguoi: soLuongNguoiLon + soLuongTreEm,
+            soLuongNguoi: totalGuests,
             soLuongNguoiLon,
             soLuongTreEm,
             tongTienThanhToan,
             ghiChu,
-            trangThai: 'Chờ thanh toán', // Fixed encoding
+            trangThai: 'Chờ thanh toán',
             nguoiLienHe,
             emailLienHe,
             sdtLienHe
         });
 
         const booking = await newBooking.save();
+
+        // Deduct seats
+        tour.soLuongCho -= totalGuests;
+        await tour.save();
+
         res.json(booking);
     } catch (err) {
         next(err);
@@ -81,9 +92,17 @@ exports.cancelBooking = async (req, res) => {
         }
 
         // Owner can cancel if pending
-        if (booking.trangThai === 'Chờ thanh toán') {
-            booking.trangThai = 'Đã hủy'; // Fixed encoding
+        if (booking.trangThai === 'Chờ thanh toán' || booking.trangThai === 'Pending') {
+            booking.trangThai = 'Đã hủy';
             await booking.save();
+
+            // Restore seats
+            const tour = await Tour.findById(booking.tourId);
+            if (tour) {
+                tour.soLuongCho += booking.soLuongNguoi;
+                await tour.save();
+            }
+
             return res.json({ msg: 'Booking cancelled' });
         } else {
             return res.status(400).json({ msg: 'Booking cannot be cancelled in its current state' });
@@ -115,6 +134,16 @@ exports.deleteBooking = async (req, res, next) => {
         // Authorization: Only Admin or Owner can delete
         if (booking.userId.toString() !== req.user.id && req.user.role !== 1) {
             return res.status(401).json({ msg: 'User not authorized' });
+        }
+
+        // Restore seats if booking was holding them (Pending/Paid/Confirmed)
+        // If it was already cancelled ('Đã hủy'), seats were already restored.
+        if (booking.trangThai !== 'Đã hủy' && booking.trangThai !== 'Cancelled') {
+            const tour = await Tour.findById(booking.tourId);
+            if (tour) {
+                tour.soLuongCho += booking.soLuongNguoi;
+                await tour.save();
+            }
         }
 
         await Booking.findOneAndDelete({ donDatId: req.params.id });
