@@ -18,4 +18,10 @@ router.get('/favorites', auth, userController.getFavorites);
 // POST /api/users/favorites/:id
 router.post('/favorites/:id', auth, userController.toggleFavorite);
 
+// PUT /api/users/:id/role
+router.put('/:id/role', auth, userController.updateRole);
+
+// DELETE /api/users/:id
+router.delete('/:id', auth, userController.deleteUser);
+
 module.exports = router;

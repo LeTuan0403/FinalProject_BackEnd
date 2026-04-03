@@ -14,7 +14,24 @@ const bookingSchema = new mongoose.Schema({
     nguoiLienHe: String,
     emailLienHe: String,
     sdtLienHe: String,
-    ghiChu: String
-});
+    ghiChu: String,
+
+    // Re-booking Flag
+    isRebooking: { type: Boolean, default: false },
+
+    // Refund System Fields
+    refundBankName: String,
+    refundAccountNumber: String,
+    refundAccountHolder: String,
+    refundReason: String,
+    refundAmountEst: Number,
+    refundPolicyApplied: String,
+    isRefundCommitment: { type: Boolean, default: false },
+    refundCommitmentDate: Date,
+    refundOtp: String,
+    refundOtpExpires: Date,
+    couponCode: String, // [NEW]
+    discountAmount: { type: Number, default: 0 } // [NEW]
+}, { timestamps: true });
 
 module.exports = mongoose.model('Booking', bookingSchema);

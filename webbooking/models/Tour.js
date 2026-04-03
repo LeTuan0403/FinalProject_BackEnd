@@ -39,6 +39,12 @@ const tourSchema = new mongoose.Schema({
       hinhAnh: String,
       dichVuAnUong: String
     }
+  ],
+  discounts: [
+    {
+      date: Date,
+      percentage: { type: Number, default: 10 }
+    }
   ]
 });
 

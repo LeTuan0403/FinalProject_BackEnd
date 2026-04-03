@@ -6,6 +6,9 @@ const auth = require('../middleware/authMiddleware');
 // GET all tours
 router.get('/', tourController.getAllTours);
 
+// POST /api/tours/rec - AI Recommendation
+router.post('/ai-recommend', tourController.getAIRecommendations);
+
 // GET tours by current user
 router.get('/user/me', auth, tourController.getToursByUser);
 
@@ -32,5 +35,11 @@ router.put('/approve/:id', auth, tourController.approveTour);
 
 // PUT /api/tours/:id - Update Tour (Admin/Standard)
 router.put('/:id', auth, tourController.updateTour);
+
+// POST /api/tours/last-minute/scan - Scan Last Minute Tours (Admin)
+router.post('/last-minute/scan', auth, tourController.scanLastMinuteTours);
+
+// PUT /api/tours/last-minute/update - Update Discount for Specific Date (Admin)
+router.put('/last-minute/update', auth, tourController.updateTourDiscount);
 
 module.exports = router;

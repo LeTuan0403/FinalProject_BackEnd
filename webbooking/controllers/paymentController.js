@@ -1,7 +1,7 @@
 const Booking = require('../models/Booking');
 const Tour = require('../models/Tour');
 const User = require('../models/User');
-const { sendBookingConfirmation } = require('../utils/emailService');
+const { sendPaymentSuccessEmail } = require('../utils/emailService');
 
 // Check Payment Status (Polling)
 exports.checkPaymentStatus = async (req, res) => {
@@ -30,57 +30,35 @@ exports.checkPaymentStatus = async (req, res) => {
 };
 
 // Handle SePay Webhook
+// Handle SePay Webhook
 exports.handleSepayWebhook = async (req, res) => {
     try {
-        const { gateway, transactionDate, accountNumber, subAccount, transferAmount, transferType, transferContent, content, referenceCode, description, in: amountIn, out, accumulated, transactionId } = req.body;
-
-        console.log("SePay Webhook Received:", JSON.stringify(req.body, null, 2));
-
-        // Simple security check (optional): Check if API Key matches (if configured)
-        // For now, we rely on the specific content syntax.
-
-        // Content Pattern: "TOUR <BookingID>" (e.g., "TOUR 12345")
-        // Flexible check: SePay might send 'content' or 'transferContent' or 'description'
+        const { transferContent, content, description } = req.body;
         const paymentText = transferContent || content || description || "";
-        const regex = /TOUR\s*(\d+)/i; // Allow 0 or more spaces just in case, though standard is space
-        const match = contentMatches(paymentText, regex);
 
-        if (!match) {
-            // Not a payment for our system, or wrong format
-            return res.status(200).json({ success: true, msg: 'Ignored: No matching content' });
+        // Security Check
+        const apiToken = process.env.SEPAY_API_TOKEN;
+        if (apiToken) {
+            const authHeader = req.headers.authorization;
+            const incomingToken = authHeader?.split(" ")[1] || req.body.api_token;
+
+            if (!incomingToken || incomingToken !== apiToken) {
+                console.warn("SePay Webhook Unauthorized Attempt");
+                // return res.status(401).json({ success: false, error: 'Unauthorized' });
+            }
         }
 
-        const bookingId = match[1];
-
-        const booking = await Booking.findOne({ donDatId: Number(bookingId) });
-
-        if (!booking) {
-            console.error(`Booking #${bookingId} not found for payment webhook`);
-            return res.status(200).json({ success: true, msg: 'Booking not found, processed anyway' });
+        // 1. Check for REFUND
+        if (paymentText.match(/Hoan tien Tour\s*(\d+)/i)) {
+            return await processRefundWebhook(req, res, paymentText);
         }
 
-        // Verify Amount (Approximate check mainly because user might transfer slightly different amount? OR exact match required)
-        // SePay sends number or string. Warning: transferAmount might be type string or number.
-        if (parseFloat(transferAmount) < booking.tongTienThanhToan) {
-            console.warn(`Payment amount mismatch for Booking #${bookingId}. Expected: ${booking.tongTienThanhToan}, Received: ${transferAmount}`);
+        // 2. Check for PAYMENT
+        if (paymentText.match(/TOUR\s*(\d+)/i)) {
+            return await processPaymentWebhook(req, res, paymentText);
         }
 
-        if (booking.trangThai === 'CONFIRMED' || booking.trangThai === 'PAID') {
-            return res.status(200).json({ success: true, msg: 'Already confirmed' });
-        }
-
-        // Update Status
-        booking.trangThai = 'CONFIRMED'; // Or 'PAID'
-        await booking.save();
-
-        // Send Email
-        const tour = await Tour.findById(booking.tourId);
-        const user = await User.findById(booking.userId);
-
-        // Note: sendBookingConfirmation is async, but we don't need to wait for it to respond to webhook
-        sendBookingConfirmation(booking, tour, user).catch(console.error);
-
-        return res.status(200).json({ success: true, bookingId: booking.donDatId });
+        return res.status(200).json({ success: true, msg: 'Ignored: No matching content' });
 
     } catch (error) {
         console.error('Webhook Error:', error);
@@ -88,8 +66,109 @@ exports.handleSepayWebhook = async (req, res) => {
     }
 };
 
-// Helper: Extract content
-function contentMatches(content, regex) {
-    if (!content) return null;
-    return content.match(regex);
-}
+const processRefundWebhook = async (req, res, paymentText) => {
+    const refundMatch = paymentText.match(/Hoan tien Tour\s*(\d+)/i);
+    const bookingId = refundMatch[1];
+    const booking = await Booking.findOne({ donDatId: Number(bookingId) }).populate('userId');
+
+    if (!booking) { return res.status(200).json({ success: true, msg: 'Refund Booking not found' }); }
+    if (booking.trangThai !== 'Chờ hoàn tiền') { return res.status(200).json({ success: true, msg: 'Booking not pending refund' }); }
+
+    // Update Status
+    booking.trangThai = 'Đã hoàn tiền';
+    await booking.save();
+
+    // Send Email
+    const { sendRefundCompletedEmail } = require('../utils/emailService');
+    const userEmail = booking.emailLienHe || (booking.userId ? booking.userId.email : '');
+    let emailSent = false;
+
+    if (userEmail) {
+        try {
+            await sendRefundCompletedEmail(userEmail, {
+                bookingId: booking.donDatId,
+                contactName: booking.nguoiLienHe || 'Quý khách',
+                refundAmount: (booking.refundAmountEst !== undefined && booking.refundAmountEst !== null) ? booking.refundAmountEst : booking.tongTienThanhToan,
+                bankName: booking.refundBankName,
+                accountNumber: booking.refundAccountNumber,
+                accountHolder: booking.refundAccountHolder
+            });
+            emailSent = true;
+        } catch (emailError) {
+            console.error('Failed to send refund email:', emailError);
+        }
+    }
+
+    // Notify Admin via Socket
+    if (req.io) {
+        req.io.emit('admin_notification', {
+            type: 'refund_auto',
+            message: `✅ Hoàn tiền tự động thành công cho đơn #${booking.donDatId}${emailSent ? ' - Email đã gửi' : ''}`,
+            data: {
+                bookingId: booking.donDatId,
+                emailSent,
+                amount: booking.refundAmountEst || booking.tongTienThanhToan
+            }
+        });
+    }
+
+    return res.json({
+        success: true,
+        msg: 'Refund confirmed via Webhook',
+        emailSent,
+        bookingId: booking.donDatId
+    });
+};
+
+const processPaymentWebhook = async (req, res, paymentText) => {
+    const { transferAmount } = req.body;
+    const match = paymentText.match(/TOUR\s*(\d+)/i);
+    const bookingId = match[1];
+
+    const booking = await Booking.findOne({ donDatId: Number(bookingId) });
+
+    if (!booking) {
+        console.error(`Booking #${bookingId} not found for payment webhook`);
+        return res.status(200).json({ success: true, msg: 'Booking not found, processed anyway' });
+    }
+
+    if (parseFloat(transferAmount) < booking.tongTienThanhToan) {
+        console.warn(`Payment amount mismatch for Booking #${bookingId}. Expected: ${booking.tongTienThanhToan}, Received: ${transferAmount}`);
+    }
+
+    if (booking.trangThai === 'CONFIRMED' || booking.trangThai === 'PAID') {
+        return res.status(200).json({ success: true, msg: 'Already confirmed' });
+    }
+
+    // Update Status
+    booking.trangThai = 'CONFIRMED';
+    await booking.save();
+
+    // Notify Admin via Socket
+    if (req.io) {
+        req.io.emit('admin_notification', {
+            type: 'payment',
+            message: `💰 Thanh toán thành công cho đơn #${booking.donDatId} (${Number(transferAmount).toLocaleString('vi-VN')}đ)`,
+            data: booking
+        });
+    }
+
+    // Send Email
+    const tour = await Tour.findById(booking.tourId);
+    const user = await User.findById(booking.userId);
+    const emailToSend = booking.emailLienHe || (user ? user.email : null);
+
+    if (emailToSend) {
+        sendPaymentSuccessEmail(emailToSend, {
+            bookingId: booking.donDatId,
+            tourName: tour ? tour.tenTour : 'Tour du lịch',
+            departureDate: new Date(booking.ngayKhoiHanh).toLocaleDateString('vi-VN'),
+            totalPrice: booking.tongTienThanhToan,
+            adults: booking.soLuongNguoiLon,
+            children: booking.soLuongTreEm,
+            contactName: booking.nguoiLienHe || (user ? user.hoTen : 'Quý khách')
+        }).catch(console.error);
+    }
+
+    return res.status(200).json({ success: true, bookingId: booking.donDatId });
+};

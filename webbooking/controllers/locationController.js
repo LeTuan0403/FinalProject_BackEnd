@@ -14,7 +14,7 @@ exports.getAllLocations = async (req, res) => {
 exports.getLocationById = async (req, res) => {
     try {
         const location = await Location.findOne({ diaDiemId: req.params.id });
-        if (!location) return res.status(404).json({ msg: 'Location not found' });
+        if (!location) { return res.status(404).json({ msg: 'Location not found' }); }
         res.json(location);
     } catch (err) {
         console.error(err.message);
@@ -24,7 +24,7 @@ exports.getLocationById = async (req, res) => {
 
 exports.createLocation = async (req, res) => {
     try {
-        if (req.user.role !== 1) return res.status(403).json({ msg: 'Access denied' });
+        if (req.user.role !== 1) { return res.status(403).json({ msg: 'Access denied' }); }
 
         const { tenDiaDiem, moTa, hinhAnh, diaChiCuThe, giaVe, thoiGianThamQuanDuKien } = req.body;
 
@@ -49,7 +49,7 @@ exports.createLocation = async (req, res) => {
 
 exports.updateLocation = async (req, res) => {
     try {
-        if (req.user.role !== 1) return res.status(403).json({ msg: 'Access denied' });
+        if (req.user.role !== 1) { return res.status(403).json({ msg: 'Access denied' }); }
 
         const { tenDiaDiem, moTa, hinhAnh, diaChiCuThe, giaVe, thoiGianThamQuanDuKien } = req.body;
 
@@ -82,7 +82,7 @@ exports.updateLocation = async (req, res) => {
 
 exports.deleteLocation = async (req, res) => {
     try {
-        if (req.user.role !== 1) return res.status(403).json({ msg: 'Access denied' });
+        if (req.user.role !== 1) { return res.status(403).json({ msg: 'Access denied' }); }
 
         const location = await Location.findOneAndDelete({ diaDiemId: req.params.id });
 

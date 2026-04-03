@@ -10,7 +10,12 @@ const userSchema = new mongoose.Schema({
     ngaySinh: Date,
     isAdmin: { type: Number, default: 0 }, // Screenshot shows 1 for admin
     ngayTao: { type: Date, default: Date.now },
-    toursYeuThich: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tour' }]
+    toursYeuThich: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tour' }],
+    verificationCode: { type: String },
+    verificationCodeExpires: { type: Date },
+    isVerified: { type: Boolean, default: false },
+    resetPasswordToken: { type: String },
+    resetPasswordExpires: { type: Date }
 });
 
 module.exports = mongoose.model('User', userSchema);
