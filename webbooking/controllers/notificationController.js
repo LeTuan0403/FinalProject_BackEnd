@@ -3,6 +3,7 @@ const Tour = require('../models/Tour');
 const Contact = require('../models/Contact');
 const Review = require('../models/Review');
 const Conversation = require('../models/Conversation');
+const Post = require('../models/Post');
 
 // Get counts of pending items
 exports.getCounts = async (_req, res) => {
@@ -13,7 +14,8 @@ exports.getCounts = async (_req, res) => {
             pendingContacts,
             pendingReviews,
             unreadMessages,
-            lastMinuteTours
+            lastMinuteTours,
+            pendingPosts
         ] = await Promise.all([
             // 1. Pending Bookings (Status: Pending or Chờ thanh toán)
             Booking.countDocuments({ trangThai: { $in: ['Pending', 'Chờ thanh toán', 'Chờ xác nhận'] } }),
@@ -41,7 +43,10 @@ exports.getCounts = async (_req, res) => {
                 return await Tour.countDocuments({
                     'discounts.date': { $gte: today, $lte: threeDaysFromNow }
                 });
-            })()
+            })(),
+
+            // 7. Pending Posts
+            Post.countDocuments({ status: 'Pending' })
         ]);
 
         res.json({
@@ -53,7 +58,8 @@ exports.getCounts = async (_req, res) => {
                 reviews: pendingReviews,
                 messages: unreadMessages,
                 lastMinute: lastMinuteTours,
-                total: pendingBookings + pendingTours + pendingContacts + pendingReviews + unreadMessages + lastMinuteTours
+                posts: pendingPosts,
+                total: pendingBookings + pendingTours + pendingContacts + pendingReviews + unreadMessages + lastMinuteTours + pendingPosts
             }
         });
 

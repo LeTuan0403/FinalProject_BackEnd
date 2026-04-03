@@ -88,3 +88,30 @@ exports.createNotification = async ({ userId, legacyUserId, title, message, type
         console.error("Error creating notification:", error);
     }
 };
+
+// Internal: Create Notification for ALL Admins
+exports.notifyAdmins = async ({ title, message, type = 'SYSTEM', link = '', socketData = {} }, io) => {
+    try {
+        const User = require('../models/User');
+        const admins = await User.find({ isAdmin: 1 });
+
+        // 1. Emit real-time summary to update Admin Header dropdown counts
+        if (io) {
+            io.emit('admin_notification', socketData);
+        }
+
+        // 2. Create persistent notifications for ALL admins
+        for (const admin of admins) {
+            await exports.createNotification({
+                userId: admin._id,
+                legacyUserId: admin.userId,
+                title,
+                message,
+                type,
+                link
+            }, io); // By passing io, it also emits `user_notification` to their room so the UI updates
+        }
+    } catch (error) {
+        console.error("Error notifying admins:", error);
+    }
+};

@@ -52,11 +52,17 @@ exports.createPost = async (req, res) => {
 
         // Notify Admin of new pending post
         if (req.io) {
-            req.io.emit('admin_notification', {
-                type: 'post',
+            await userNotificationController.notifyAdmins({
+                title: 'Bài viết cộng đồng mới',
                 message: `Bài viết mới từ ${req.user.hoTen} (${post.status === 'Approved' ? 'Đã duyệt tự động' : post.status === 'Rejected' ? 'Đã chặn tự động' : 'Cần duyệt'})`,
-                data: post
-            });
+                type: 'POST',
+                link: '/admin/posts',
+                socketData: {
+                    type: 'post',
+                    message: `Bài viết mới từ ${req.user.hoTen} (${post.status === 'Approved' ? 'Đã duyệt tự động' : post.status === 'Rejected' ? 'Đã chặn tự động' : 'Cần duyệt'})`,
+                    data: post
+                }
+            }, req.io);
 
             // Notify User
             let userMsg = '';
@@ -443,6 +449,7 @@ exports.deletePost = async (req, res) => {
 };
 
 // Update Post (Reset to Pending)
+// eslint-disable-next-line complexity
 exports.updatePost = async (req, res) => {
     try {
         const { title, content, media, linkedTourId } = req.body;
@@ -455,15 +462,53 @@ exports.updatePost = async (req, res) => {
             return res.status(401).json({ msg: 'User not authorized' });
         }
 
-        post.title = title || post.title;
-        post.content = content || post.content;
-        post.media = media || post.media;
-        post.linkedTourId = linkedTourId || post.linkedTourId;
+        post.title = title !== undefined ? title : post.title;
+        post.content = content !== undefined ? content : post.content;
+        post.media = media !== undefined ? media : post.media;
+        post.linkedTourId = linkedTourId !== undefined ? linkedTourId : post.linkedTourId;
 
-        // Reset status to Pending for re-approval
-        post.status = 'Pending';
+        // AI Moderation for updated content
+        try {
+            const { moderateContent } = require('../routes/aiService');
+            const moderationResult = await moderateContent(post.title, post.content);
+
+            post.moderationData = moderationResult;
+
+            if (moderationResult.isSafe) {
+                post.status = 'Approved';
+            } else {
+                if (moderationResult.confidence > 0.8) {
+                    post.status = 'Rejected';
+                } else {
+                    post.status = 'Pending';
+                }
+            }
+        } catch (aiError) {
+            console.error("AI Moderation Failed on Update:", aiError);
+            post.status = 'Pending';
+            post.moderationData = {
+                isSafe: false,
+                confidence: 0,
+                reason: "AI Service Error, manual review required.",
+                flaggedCategories: ["System Error"]
+            };
+        }
 
         await post.save();
+
+        if (req.io) {
+            await userNotificationController.notifyAdmins({
+                title: 'Bài viết cộng đồng được chỉnh sửa',
+                message: `${req.user.hoTen} vừa chỉnh sửa bài viết (${post.status === 'Approved' ? 'Đã duyệt tự động' : post.status === 'Rejected' ? 'Đã chặn tự động' : 'Cần duyệt'})`,
+                type: 'POST',
+                link: '/admin/posts',
+                socketData: {
+                    type: 'post',
+                    message: `${req.user.hoTen} vừa chỉnh sửa bài viết (${post.status === 'Approved' ? 'Đã duyệt tự động' : post.status === 'Rejected' ? 'Đã chặn tự động' : 'Cần duyệt'})`,
+                    data: post
+                }
+            }, req.io);
+        }
 
         res.json(post);
     } catch (err) {

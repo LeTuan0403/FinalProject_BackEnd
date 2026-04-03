@@ -67,7 +67,7 @@ io.on("connection", (socket) => {
         socket.leave(data);
     });
 
-    socket.on("send_message", (data) => {
+    socket.on("send_message", () => {
         // Broadcasts are now securely handled by post/chat API controllers
         // removing duplicate emits here to fix issue where messages show up twice
     });

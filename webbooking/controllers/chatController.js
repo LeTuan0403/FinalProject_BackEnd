@@ -1,8 +1,7 @@
 const Conversation = require('../models/Conversation');
 const User = require('../models/User');
 const Tour = require('../models/Tour');
-const { createNotification } = require('./userNotificationController');
-const Notification = require('../models/Notification');
+const { createNotification, notifyAdmins } = require('./userNotificationController');
 
 // Lưu ý: Đảm bảo đường dẫn này đúng với nơi bạn lưu file aiService.js
 // Nếu bạn để trong folder services thì đổi thành '../services/aiService'
@@ -76,7 +75,7 @@ const getConversation = async (req, res) => {
         const userIdStr = String(req.params.userId);
         const userIdNum = !isNaN(Number(userIdStr)) ? Number(userIdStr) : null;
         const searchConditions = [userIdStr];
-        if (userIdNum !== null) searchConditions.push(userIdNum);
+        if (userIdNum !== null) {searchConditions.push(userIdNum);}
 
         const conversation = await Conversation.findOne({
             members: { $in: searchConditions }
@@ -137,12 +136,18 @@ const handleSocketAndNotification = async (req, res, senderId, conversationId, c
         req.io.to(conversationId).emit("receive_message", messageResponse);
 
         if (senderId !== 'admin') {
-            req.io.emit('admin_notification', {
-                type: 'message',
-                message: 'Tin nhắn mới từ khách hàng',
-                data: messageResponse,
-                unreadSince: conversation.unreadSince
-            });
+            await notifyAdmins({
+                title: 'Tin nhắn mới',
+                message: `Tin nhắn mới từ ${conversation.guestName || 'khách hàng'}`,
+                type: 'MESSAGE',
+                link: `/admin/chat?conversationId=${conversationId}`,
+                socketData: {
+                    type: 'message',
+                    message: 'Tin nhắn mới từ khách hàng',
+                    data: messageResponse,
+                    unreadSince: conversation.unreadSince
+                }
+            }, req.io);
         } else if (isAiGenerated) {
             req.io.emit('admin_notification', {
                 type: 'message',
@@ -418,8 +423,8 @@ const deleteConversation = async (req, res) => {
             }
 
             if (user) {
-                // Delete all previous MESSAGE notifications for this user
-                await Notification.deleteMany({ user: user._id, type: 'MESSAGE' });
+                // Keep previous MESSAGE notifications as history
+                // await Notification.deleteMany({ user: user._id, type: 'MESSAGE' });
 
                 await createNotification({
                     userId: user._id,
