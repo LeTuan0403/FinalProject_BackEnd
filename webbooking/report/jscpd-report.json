@@ -1,0 +1,881 @@
+{
+  "statistics": {
+    "detectionDate": "2026-01-14T03:07:53.329Z",
+    "formats": {
+      "javascript": {
+        "sources": {
+          "./webbooking/utils/idGenerator.js": {
+            "lines": 11,
+            "tokens": 115,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/utils/emailService.js": {
+            "lines": 119,
+            "tokens": 551,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/utils/cronJob.js": {
+            "lines": 58,
+            "tokens": 672,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/routes/userRoutes.js": {
+            "lines": 23,
+            "tokens": 194,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/routes/tourRoutes.js": {
+            "lines": 35,
+            "tokens": 276,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/routes/reviewRoutes.js": {
+            "lines": 43,
+            "tokens": 335,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/routes/paymentRoutes.js": {
+            "lines": 13,
+            "tokens": 143,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/routes/locationRoutes.js": {
+            "lines": 20,
+            "tokens": 166,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/routes/contactRoutes.js": {
+            "lines": 17,
+            "tokens": 149,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/routes/chatRoutes.js": {
+            "lines": 15,
+            "tokens": 163,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/routes/bookingRoutes.js": {
+            "lines": 26,
+            "tokens": 216,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/routes/authRoutes.js": {
+            "lines": 20,
+            "tokens": 158,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/models/User.js": {
+            "lines": 20,
+            "tokens": 329,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/models/Tour.js": {
+            "lines": 44,
+            "tokens": 504,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/models/Review.js": {
+            "lines": 36,
+            "tokens": 487,
+            "sources": 1,
+            "clones": 2,
+            "duplicatedLines": 18,
+            "duplicatedTokens": 214,
+            "percentage": 50,
+            "percentageTokens": 43.94,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/models/Message.js": {
+            "lines": 25,
+            "tokens": 213,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/models/Location.js": {
+            "lines": 14,
+            "tokens": 206,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/models/Counter.js": {
+            "lines": 7,
+            "tokens": 93,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/models/Conversation.js": {
+            "lines": 23,
+            "tokens": 188,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/models/Contact.js": {
+            "lines": 12,
+            "tokens": 199,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/models/Booking.js": {
+            "lines": 19,
+            "tokens": 260,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/middleware/errorMiddleware.js": {
+            "lines": 11,
+            "tokens": 139,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/middleware/authMiddleware.js": {
+            "lines": 39,
+            "tokens": 385,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/controllers/userController.js": {
+            "lines": 102,
+            "tokens": 1226,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/controllers/uploadController.js": {
+            "lines": 52,
+            "tokens": 562,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/controllers/tourController.js": {
+            "lines": 302,
+            "tokens": 3357,
+            "sources": 1,
+            "clones": 2,
+            "duplicatedLines": 24,
+            "duplicatedTokens": 194,
+            "percentage": 7.95,
+            "percentageTokens": 5.78,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/controllers/reviewController.js": {
+            "lines": 275,
+            "tokens": 3133,
+            "sources": 1,
+            "clones": 12,
+            "duplicatedLines": 88,
+            "duplicatedTokens": 1234,
+            "percentage": 32,
+            "percentageTokens": 39.39,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/controllers/paymentController.js": {
+            "lines": 111,
+            "tokens": 1106,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/controllers/locationController.js": {
+            "lines": 97,
+            "tokens": 1045,
+            "sources": 1,
+            "clones": 2,
+            "duplicatedLines": 12,
+            "duplicatedTokens": 194,
+            "percentage": 12.37,
+            "percentageTokens": 18.56,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/controllers/contactController.js": {
+            "lines": 78,
+            "tokens": 902,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/controllers/chatController.js": {
+            "lines": 128,
+            "tokens": 1301,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/controllers/bookingController.js": {
+            "lines": 371,
+            "tokens": 4054,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/controllers/authController.js": {
+            "lines": 257,
+            "tokens": 2823,
+            "sources": 1,
+            "clones": 4,
+            "duplicatedLines": 44,
+            "duplicatedTokens": 542,
+            "percentage": 17.12,
+            "percentageTokens": 19.2,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/config/db.js": {
+            "lines": 10,
+            "tokens": 110,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          },
+          "./webbooking/index.js": {
+            "lines": 81,
+            "tokens": 760,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          }
+        },
+        "total": {
+          "lines": 2514,
+          "tokens": 26520,
+          "sources": 35,
+          "clones": 11,
+          "duplicatedLines": 93,
+          "duplicatedTokens": 1189,
+          "percentage": 3.7,
+          "percentageTokens": 4.48,
+          "newDuplicatedLines": 0,
+          "newClones": 0
+        }
+      },
+      "json": {
+        "sources": {
+          "./webbooking/package.json": {
+            "lines": 31,
+            "tokens": 197,
+            "sources": 1,
+            "clones": 0,
+            "duplicatedLines": 0,
+            "duplicatedTokens": 0,
+            "percentage": 0,
+            "percentageTokens": 0,
+            "newDuplicatedLines": 0,
+            "newClones": 0
+          }
+        },
+        "total": {
+          "lines": 31,
+          "tokens": 197,
+          "sources": 1,
+          "clones": 0,
+          "duplicatedLines": 0,
+          "duplicatedTokens": 0,
+          "percentage": 0,
+          "percentageTokens": 0,
+          "newDuplicatedLines": 0,
+          "newClones": 0
+        }
+      }
+    },
+    "total": {
+      "lines": 2545,
+      "tokens": 26717,
+      "sources": 36,
+      "clones": 11,
+      "duplicatedLines": 93,
+      "duplicatedTokens": 1189,
+      "percentage": 3.65,
+      "percentageTokens": 4.45,
+      "newDuplicatedLines": 0,
+      "newClones": 0
+    }
+  },
+  "duplicates": [
+    {
+      "format": "javascript",
+      "lines": 10,
+      "fragment": ",\r\n            isAnonymous: { type: Boolean, default: false },\r\n            media: [\r\n                {\r\n                    type: { type: String, enum: ['image', 'video'] },\r\n                    url: { type: String }\r\n                }\r\n            ],\r\n            likes: [{ type: String, ref: 'User' }]\r\n        }",
+      "tokens": 0,
+      "firstFile": {
+        "name": "webbooking\\models\\Review.js",
+        "start": 24,
+        "end": 33,
+        "startLoc": {
+          "line": 24,
+          "column": 2,
+          "position": 351
+        },
+        "endLoc": {
+          "line": 33,
+          "column": 2,
+          "position": 458
+        }
+      },
+      "secondFile": {
+        "name": "webbooking\\models\\Review.js",
+        "start": 11,
+        "end": 19,
+        "startLoc": {
+          "line": 11,
+          "column": 5,
+          "position": 182
+        },
+        "endLoc": {
+          "line": 19,
+          "column": 2,
+          "position": 286
+        }
+      }
+    },
+    {
+      "format": "javascript",
+      "lines": 13,
+      "fragment": ");\r\n        res.json(tour);\r\n\r\n    } catch (err) {\r\n        if (typeof next === 'function') next(err);\r\n        else {\r\n            console.error(err.message);\r\n            res.status(500).send('Server Error');\r\n        }\r\n    }\r\n};\r\n\r\nexports.approveTour",
+      "tokens": 0,
+      "firstFile": {
+        "name": "webbooking\\controllers\\tourController.js",
+        "start": 195,
+        "end": 207,
+        "startLoc": {
+          "line": 195,
+          "column": 2,
+          "position": 2225
+        },
+        "endLoc": {
+          "line": 207,
+          "column": 12,
+          "position": 2322
+        }
+      },
+      "secondFile": {
+        "name": "webbooking\\controllers\\tourController.js",
+        "start": 158,
+        "end": 169,
+        "startLoc": {
+          "line": 158,
+          "column": 2,
+          "position": 1811
+        },
+        "endLoc": {
+          "line": 169,
+          "column": 15,
+          "position": 1906
+        }
+      }
+    },
+    {
+      "format": "javascript",
+      "lines": 6,
+      "fragment": "= async (req, res) => {\r\n    try {\r\n        const review = await Review.findOne({ danhGiaId: req.params.id });\r\n        if (!review) return res.status(404).json({ msg: 'Review not found' });\r\n\r\n        // Check if already liked",
+      "tokens": 0,
+      "firstFile": {
+        "name": "webbooking\\controllers\\reviewController.js",
+        "start": 143,
+        "end": 148,
+        "startLoc": {
+          "line": 143,
+          "column": 2,
+          "position": 1599
+        },
+        "endLoc": {
+          "line": 148,
+          "column": 26,
+          "position": 1684
+        }
+      },
+      "secondFile": {
+        "name": "webbooking\\controllers\\reviewController.js",
+        "start": 125,
+        "end": 130,
+        "startLoc": {
+          "line": 125,
+          "column": 2,
+          "position": 1355
+        },
+        "endLoc": {
+          "line": 130,
+          "column": 18,
+          "position": 1440
+        }
+      }
+    },
+    {
+      "format": "javascript",
+      "lines": 6,
+      "fragment": "= async (req, res) => {\r\n    try {\r\n        const review = await Review.findOne({ danhGiaId: req.params.id });\r\n        if (!review) return res.status(404).json({ msg: 'Review not found' });\r\n\r\n        const",
+      "tokens": 0,
+      "firstFile": {
+        "name": "webbooking\\controllers\\reviewController.js",
+        "start": 195,
+        "end": 200,
+        "startLoc": {
+          "line": 195,
+          "column": 2,
+          "position": 2152
+        },
+        "endLoc": {
+          "line": 200,
+          "column": 6,
+          "position": 2237
+        }
+      },
+      "secondFile": {
+        "name": "webbooking\\controllers\\reviewController.js",
+        "start": 125,
+        "end": 130,
+        "startLoc": {
+          "line": 125,
+          "column": 2,
+          "position": 1355
+        },
+        "endLoc": {
+          "line": 130,
+          "column": 18,
+          "position": 1440
+        }
+      }
+    },
+    {
+      "format": "javascript",
+      "lines": 9,
+      "fragment": "= async (req, res) => {\r\n    try {\r\n        const review = await Review.findOne({ danhGiaId: req.params.id });\r\n        if (!review) return res.status(404).json({ msg: 'Review not found' });\r\n\r\n        const reply = review.replies.id(req.params.replyId);\r\n        if (!reply) return res.status(404).json({ msg: 'Reply not found' });\r\n\r\n        // Check user authorization",
+      "tokens": 0,
+      "firstFile": {
+        "name": "webbooking\\controllers\\reviewController.js",
+        "start": 222,
+        "end": 230,
+        "startLoc": {
+          "line": 222,
+          "column": 2,
+          "position": 2463
+        },
+        "endLoc": {
+          "line": 230,
+          "column": 28,
+          "position": 2603
+        }
+      },
+      "secondFile": {
+        "name": "webbooking\\controllers\\reviewController.js",
+        "start": 125,
+        "end": 203,
+        "startLoc": {
+          "line": 125,
+          "column": 2,
+          "position": 1355
+        },
+        "endLoc": {
+          "line": 203,
+          "column": 26,
+          "position": 2292
+        }
+      }
+    },
+    {
+      "format": "javascript",
+      "lines": 10,
+      "fragment": "await review.populate('replies.userId', 'hoTen avatar userId isAdmin email');\r\n\r\n        res.json(review.replies);\r\n    } catch (err) {\r\n        console.error(err.message);\r\n        res.status(500).send('Server Error');\r\n    }\r\n};\r\n\r\nexports.updateReply",
+      "tokens": 0,
+      "firstFile": {
+        "name": "webbooking\\controllers\\reviewController.js",
+        "start": 240,
+        "end": 249,
+        "startLoc": {
+          "line": 240,
+          "column": 9,
+          "position": 2707
+        },
+        "endLoc": {
+          "line": 249,
+          "column": 12,
+          "position": 2786
+        }
+      },
+      "secondFile": {
+        "name": "webbooking\\controllers\\reviewController.js",
+        "start": 186,
+        "end": 195,
+        "startLoc": {
+          "line": 186,
+          "column": 9,
+          "position": 2071
+        },
+        "endLoc": {
+          "line": 195,
+          "column": 10,
+          "position": 2150
+        }
+      }
+    },
+    {
+      "format": "javascript",
+      "lines": 8,
+      "fragment": "const review = await Review.findOne({ danhGiaId: req.params.id });\r\n        if (!review) return res.status(404).json({ msg: 'Review not found' });\r\n\r\n        const reply = review.replies.id(req.params.replyId);\r\n        if (!reply) return res.status(404).json({ msg: 'Reply not found' });\r\n\r\n        // Check user authorization\r\n        if (reply.userId.toString() !== req.user.id)",
+      "tokens": 0,
+      "firstFile": {
+        "name": "webbooking\\controllers\\reviewController.js",
+        "start": 252,
+        "end": 259,
+        "startLoc": {
+          "line": 252,
+          "column": 9,
+          "position": 2831
+        },
+        "endLoc": {
+          "line": 259,
+          "column": 2,
+          "position": 2970
+        }
+      },
+      "secondFile": {
+        "name": "webbooking\\controllers\\reviewController.js",
+        "start": 197,
+        "end": 231,
+        "startLoc": {
+          "line": 197,
+          "column": 9,
+          "position": 2175
+        },
+        "endLoc": {
+          "line": 231,
+          "column": 3,
+          "position": 2626
+        }
+      }
+    },
+    {
+      "format": "javascript",
+      "lines": 11,
+      "fragment": "await review.save();\r\n\r\n        // Repopulate for frontend update\r\n        await review.populate('replies.userId', 'hoTen avatar userId isAdmin email');\r\n\r\n        res.json(review.replies);\r\n    } catch (err) {\r\n        console.error(err.message);\r\n        res.status(500).send('Server Error');\r\n    }\r\n};",
+      "tokens": 0,
+      "firstFile": {
+        "name": "webbooking\\controllers\\reviewController.js",
+        "start": 266,
+        "end": 276,
+        "startLoc": {
+          "line": 266,
+          "column": 9,
+          "position": 3044
+        },
+        "endLoc": {
+          "line": 276,
+          "column": 2,
+          "position": 3133
+        }
+      },
+      "secondFile": {
+        "name": "webbooking\\controllers\\reviewController.js",
+        "start": 237,
+        "end": 247,
+        "startLoc": {
+          "line": 237,
+          "column": 9,
+          "position": 2690
+        },
+        "endLoc": {
+          "line": 247,
+          "column": 2,
+          "position": 2779
+        }
+      }
+    },
+    {
+      "format": "javascript",
+      "lines": 7,
+      "fragment": "= async (req, res) => {\r\n    try {\r\n        if (req.user.role !== 1) return res.status(403).json({ msg: 'Access denied' });\r\n\r\n        const { tenDiaDiem, moTa, hinhAnh, diaChiCuThe, giaVe, thoiGianThamQuanDuKien } = req.body;\r\n\r\n        // Find and update",
+      "tokens": 0,
+      "firstFile": {
+        "name": "webbooking\\controllers\\locationController.js",
+        "start": 50,
+        "end": 56,
+        "startLoc": {
+          "line": 50,
+          "column": 2,
+          "position": 547
+        },
+        "endLoc": {
+          "line": 56,
+          "column": 19,
+          "position": 644
+        }
+      },
+      "secondFile": {
+        "name": "webbooking\\controllers\\locationController.js",
+        "start": 25,
+        "end": 31,
+        "startLoc": {
+          "line": 25,
+          "column": 2,
+          "position": 279
+        },
+        "endLoc": {
+          "line": 31,
+          "column": 6,
+          "position": 376
+        }
+      }
+    },
+    {
+      "format": "javascript",
+      "lines": 12,
+      "fragment": "const payload = { user: { id: user.id, role: user.isAdmin } };\r\n            jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '5d' }, (err, token) => {\r\n                if (err) throw err;\r\n                res.json({\r\n                    token,\r\n                    hoTen: user.hoTen,\r\n                    role: user.isAdmin === 1 ? 'Admin' : 'Customer',\r\n                    userId: user.userId,\r\n                    email: user.email,\r\n                    soDienThoai: user.soDienThoai,\r\n                    diaChi: user.diaChi\r\n                }",
+      "tokens": 0,
+      "firstFile": {
+        "name": "webbooking\\controllers\\authController.js",
+        "start": 164,
+        "end": 175,
+        "startLoc": {
+          "line": 164,
+          "column": 13,
+          "position": 1768
+        },
+        "endLoc": {
+          "line": 175,
+          "column": 2,
+          "position": 1937
+        }
+      },
+      "secondFile": {
+        "name": "webbooking\\controllers\\authController.js",
+        "start": 15,
+        "end": 25,
+        "startLoc": {
+          "line": 15,
+          "column": 5,
+          "position": 169
+        },
+        "endLoc": {
+          "line": 25,
+          "column": 2,
+          "position": 335
+        }
+      }
+    },
+    {
+      "format": "javascript",
+      "lines": 12,
+      "fragment": "token,\r\n                hoTen: user.hoTen,\r\n                role: user.isAdmin === 1 ? 'Admin' : 'Customer',\r\n                userId: user.userId,\r\n                email: user.email,\r\n                soDienThoai: user.soDienThoai,\r\n                diaChi: user.diaChi,\r\n                hanCheThanhToan: user.hanCheThanhToan\r\n            });\r\n        });\r\n\r\n    } catch",
+      "tokens": 0,
+      "firstFile": {
+        "name": "webbooking\\controllers\\authController.js",
+        "start": 243,
+        "end": 254,
+        "startLoc": {
+          "line": 243,
+          "column": 17,
+          "position": 2680
+        },
+        "endLoc": {
+          "line": 254,
+          "column": 6,
+          "position": 2782
+        }
+      },
+      "secondFile": {
+        "name": "webbooking\\controllers\\authController.js",
+        "start": 19,
+        "end": 29,
+        "startLoc": {
+          "line": 19,
+          "column": 13,
+          "position": 262
+        },
+        "endLoc": {
+          "line": 29,
+          "column": 2,
+          "position": 360
+        }
+      }
+    }
+  ]
+}
