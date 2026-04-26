@@ -8,8 +8,9 @@ const userSchema = new mongoose.Schema({
     soDienThoai: String,
     diaChi: String,
     ngaySinh: Date,
-    isAdmin: { type: Number, default: 0 }, // Screenshot shows 1 for admin
+    isAdmin: { type: Number, default: 0 },
     ngayTao: { type: Date, default: Date.now },
+    soTour: { type: Number, default: 0 },
     toursYeuThich: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tour' }],
     verificationCode: { type: String },
     verificationCodeExpires: { type: Date },
