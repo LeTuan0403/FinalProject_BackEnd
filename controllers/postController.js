@@ -449,7 +449,6 @@ exports.deletePost = async (req, res) => {
 };
 
 // Update Post (Reset to Pending)
-// eslint-disable-next-line complexity
 exports.updatePost = async (req, res) => {
     try {
         const { title, content, media, linkedTourId } = req.body;
@@ -632,7 +631,6 @@ exports.sharePost = async (req, res) => {
 };
 
 // Reward Helper
-// eslint-disable-next-line complexity
 const checkEngagementReward = async (post, io) => {
     try {
         const likeCount = post.likes.length;

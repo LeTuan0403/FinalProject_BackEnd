@@ -5,7 +5,6 @@ const getNextSequence = require('../utils/idGenerator');
 const { sendBookingConfirmationEmail, sendRefundOtpEmail, sendRefundCompletedEmail } = require('../utils/emailService');
 const { checkBookingRestrictions, validateStatusChange, validateSeatAdjustment } = require('../utils/bookingValidations');
 
-// eslint-disable-next-line complexity
 exports.createBooking = async (req, res, next) => {
     try {
         const { tourId, ngayKhoiHanh, tongTienThanhToan, soLuongNguoiLon, soLuongTreEm, nguoiLienHe, emailLienHe, sdtLienHe, ghiChu, couponCode } = req.body;
@@ -110,7 +109,7 @@ exports.getMyBookings = async (req, res, next) => {
         const formatted = bookings.map(b => ({
             ...b,
             tour: b.tourId,
-            tourId: b.tourId?._id || b.tourId,
+            tourId: b.tourId?.tourId || b.tourId?._id || b.tourId,
             couponCode: b.couponCode || null,
             discountAmount: b.discountAmount || 0
         }));
@@ -130,7 +129,7 @@ exports.getAllBookings = async (req, res, next) => {
         const formatted = bookings.map(b => ({
             ...b,
             tour: b.tourId,
-            tourId: b.tourId?.tourId || b.tourId
+            tourId: b.tourId?.tourId || b.tourId?._id || b.tourId
         }));
 
         res.json(formatted);
@@ -181,7 +180,14 @@ exports.getBookingById = async (req, res, next) => {
         if (!bookingUserId || (bookingUserId.toString() !== req.user.id && req.user.role !== 1)) {
             return res.status(401).json({ msg: 'Not authorized' });
         }
-        res.json(booking);
+
+        const formatted = {
+            ...booking.toObject(),
+            tour: booking.tourId,
+            tourId: booking.tourId?.tourId || booking.tourId?._id || booking.tourId
+        };
+
+        res.json(formatted);
     } catch (err) {
         next(err);
     }
